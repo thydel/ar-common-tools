@@ -1,0 +1,35 @@
+---
+
+# Ansible check mode available for this sequence of task only after python-apt installed
+
+- name: update
+  apt: { update_cache: True, cache_valid_time: 300 }
+
+- name: Install network relates tools
+  with_items: [ ifrename, resolvconf ]
+  apt: { name: "{{ item }}" }
+
+- name: Install complementary apt tools  
+  with_items: [ apt-file ]
+  notify: apt-file update
+  apt: { name: "{{ item }}" }
+
+- name: install convenient small diag tools
+  with_items: [ locate, htop, dnsutils ]
+  apt: { name: "{{ item }}" }
+
+# _pkg(python-dev) is apparently required for _pkg(python-augeas) to
+# works (in fact maybe for any dynamic library to be used) and that
+# was not that easy to find.
+
+- name: Install augeas related tools
+  with_items: [ augeas-tools, python-augeas, python-dev ]
+  apt: { name: "{{ item }}" }
+
+# parted needed by our partprobe module
+#
+# all are related to auto disk setup
+
+- name: Install tools needed for disk setup
+  with_items: [ parted, cryptsetup, ohai ]
+  apt: { name: "{{ item }}" }

@@ -1,0 +1,4 @@
+---
+
+- name: apt-file update
+  command: apt-file update

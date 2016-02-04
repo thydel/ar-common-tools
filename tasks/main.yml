@@ -1,0 +1,5 @@
+---
+
+- { include: default-gw.yml, state: add }
+- { include: tools.yml }
+- { include: default-gw.yml, state: del }

@@ -1,0 +1,13 @@
+---
+
+- name: See if we have a default GW
+
+  set_fact:
+    tmp_default_gw_: |
+      {{ ansible_default_ipv4.gateway is not defined }}
+
+- name: Add or remove default GW
+
+  when: tmp_default_gw_
+
+  command: ip route {{ state }} default via {{ Networks.admin2.gw }}
