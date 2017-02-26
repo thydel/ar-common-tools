@@ -10,4 +10,4 @@
 
   when: tmp_default_gw_
 
-  command: ip route {{ state }} default via {{ Networks.admin2.gw }}
+  command: ip route {{ state }} default via {{ admin_network_gw }}
